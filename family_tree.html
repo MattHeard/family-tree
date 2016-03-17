@@ -10,7 +10,7 @@
   }
 
   function getSpacing() {
-    return 50;
+    return 80;
   }
 
   function drawRelationships(data) {
@@ -39,7 +39,7 @@
         .data(people)
       .enter()
         .append("circle")
-        .attr("r", 10)
+        .attr("r", 25)
         .attr("cx", function(d) { return d.x * spacing; })
         .attr("cy", function(d) { return d.y * spacing; })
   }
