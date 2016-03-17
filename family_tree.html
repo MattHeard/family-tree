@@ -1,8 +1,23 @@
 <!DOCYPE html>
 <script src="d3.js" charset="utf-8"></script>
 <script>
-  d3.json("people.json", function(error, people) {
+  d3.json("data.json", function(error, data) {
     var spacing = 50;
+    var people = data[0]["values"];
+    var relationships = data[1]["values"];
+    console.log(relationships);
+
+    d3.select("svg")
+      .selectAll("line")
+        .data(relationships)
+      .enter()
+        .append("line")
+        .attr("x1", function(d) { return people[d.from].x * spacing; })
+        .attr("y1", function(d) { return people[d.from].y * spacing; })
+        .attr("x2", function(d) { return people[d.to].x * spacing; })
+        .attr("y2", function(d) { return people[d.to].y * spacing; })
+        .style("stroke", "rgb(6,120,155)");
+
     d3.select("svg")
       .selectAll("circle")
         .data(people)
