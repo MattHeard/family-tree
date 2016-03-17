@@ -1,11 +1,22 @@
 <!DOCYPE html>
 <script src="d3.js" charset="utf-8"></script>
 <script>
-  d3.json("data.json", function(error, data) {
-    var spacing = 50;
-    var people = data[0]["values"];
-    var relationships = data[1]["values"];
-    console.log(relationships);
+  function getPeople(data) {
+    return data[0]["values"];
+  }
+
+  function getRelationships(data) {
+    return data[1]["values"];
+  }
+
+  function getSpacing() {
+    return 50;
+  }
+
+  function drawRelationships(data) {
+    var spacing = getSpacing();
+    var people = getPeople(data);
+    var relationships = getRelationships(data);
 
     d3.select("svg")
       .selectAll("line")
@@ -17,6 +28,11 @@
         .attr("x2", function(d) { return people[d.to].x * spacing; })
         .attr("y2", function(d) { return people[d.to].y * spacing; })
         .style("stroke", "rgb(6,120,155)");
+  }
+
+  function drawPeople(data) {
+    var spacing = getSpacing();
+    var people = getPeople(data);
 
     d3.select("svg")
       .selectAll("circle")
@@ -26,6 +42,11 @@
         .attr("r", 10)
         .attr("cx", function(d) { return d.x * spacing; })
         .attr("cy", function(d) { return d.y * spacing; })
+  }
+
+  d3.json("data.json", function(error, data) {
+    drawRelationships(data);
+    drawPeople(data);
   });
 </script>
 <style>
