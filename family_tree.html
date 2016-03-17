@@ -26,21 +26,41 @@
         .attr("x1", function(d) { return people[d.from].x * spacing; })
         .attr("y1", function(d) { return people[d.from].y * spacing; })
         .attr("x2", function(d) { return people[d.to].x * spacing; })
-        .attr("y2", function(d) { return people[d.to].y * spacing; })
+        .attr("y2", function(d) { return people[d.to].y * spacing; });
   }
 
-  function drawPeople(data) {
-    var spacing = getSpacing();
-    var people = getPeople(data);
-
+  function addPeople(people) {
     d3.select("svg")
-      .selectAll("circle")
+      .selectAll("g")
         .data(people)
       .enter()
+        .append("g");
+  }
+
+  function drawCircles() {
+    var spacing = getSpacing();
+
+    d3.select("svg")
+      .selectAll("g")
         .append("circle")
         .attr("r", 25)
         .attr("cx", function(d) { return d.x * spacing; })
-        .attr("cy", function(d) { return d.y * spacing; })
+        .attr("cy", function(d) { return d.y * spacing; });
+  }
+
+  function drawTooltips() {
+    d3.select("svg")
+      .selectAll("g")
+      .select("circle")
+        .append("title")
+        .text(function(d) { return d.name; });
+  }
+
+  function drawPeople(data) {
+    var people = getPeople(data);
+    addPeople(people);
+    drawCircles();
+    drawTooltips();
   }
 
   d3.json("data.json", function(error, data) {
