@@ -27,7 +27,6 @@
         .attr("y1", function(d) { return people[d.from].y * spacing; })
         .attr("x2", function(d) { return people[d.to].x * spacing; })
         .attr("y2", function(d) { return people[d.to].y * spacing; })
-        .style("stroke", "rgb(6,120,155)");
   }
 
   function drawPeople(data) {
@@ -57,6 +56,10 @@
   svg {
     width: 800px;
     height: 600px;
+  }
+
+  line {
+    stroke: rgb(6,120,155);
   }
 
   circle {
