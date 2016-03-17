@@ -1,2 +1,32 @@
 <!DOCYPE html>
 <script src="d3.js" charset="utf-8"></script>
+<script>
+  d3.json("people.json", function(error, people) {
+    var spacing = 50;
+    d3.select("svg")
+      .selectAll("circle")
+        .data(people)
+      .enter()
+        .append("circle")
+        .attr("r", 10)
+        .attr("cx", function(d) { return d.x * spacing; })
+        .attr("cy", function(d) { return d.y * spacing; })
+  });
+</script>
+<style>
+  body {
+    margin: 0px;
+  }
+
+  svg {
+    width: 800px;
+    height: 600px;
+  }
+
+  circle {
+    fill: LightSalmon;
+  }
+</style>
+<body>
+  <svg></svg>
+</body>
