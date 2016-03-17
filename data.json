@@ -2,11 +2,11 @@
   {
     "name": "people",
     "values": [
-      { "name": "Matt",   "fb_id": "744497500",       "x": 2, "y": 2 },
-      { "name": "Linda",  "fb_id": "100000841361915", "x": 1, "y": 1 },
-      { "name": "John",   "fb_id": "592639429",       "x": 3, "y": 1 },
-      { "name": "Leah",   "fb_id": "512281081",       "x": 4, "y": 2 },
-      { "name": "Evelyn", "fb_id": "",                "x": 3, "y": 3 } ]
+      { "name": "Matt",   "x": 2, "y": 2 },
+      { "name": "Linda",  "x": 1, "y": 1 },
+      { "name": "John",   "x": 3, "y": 1 },
+      { "name": "Leah",   "x": 4, "y": 2 },
+      { "name": "Evelyn", "x": 3, "y": 3 } ]
   },
   {
     "name": "relationships",
