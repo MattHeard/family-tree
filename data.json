@@ -1,0 +1,21 @@
+[
+  {
+    "name": "people",
+    "values": [
+      { "name": "Matt",   "x": 2, "y": 2 },
+      { "name": "Linda",  "x": 1, "y": 1 },
+      { "name": "John",   "x": 3, "y": 1 },
+      { "name": "Leah",   "x": 4, "y": 2 },
+      { "name": "Evelyn", "x": 3, "y": 3 } ]
+  },
+  {
+    "name": "relationships",
+    "values": [
+      { "from": 0, "to": 1, "type": "parent" },
+      { "from": 0, "to": 2, "type": "parent" },
+      { "from": 0, "to": 3, "type": "spouse" },
+      { "from": 0, "to": 4, "type": "parent" },
+      { "from": 1, "to": 2, "type": "spouse" },
+      { "from": 3, "to": 4, "type": "parent" } ]
+  }
+]
