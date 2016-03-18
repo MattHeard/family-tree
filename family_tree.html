@@ -1,8 +1,11 @@
 <!DOCYPE html>
 <script src="d3.js" charset="utf-8"></script>
 <script>
-  function getPeople(data) {
-    return data[0]["values"];
+  var data = 0;
+
+  function getPeople() {
+    people = data[0]["values"];
+    return people;
   }
 
   function getRelationships(data) {
@@ -13,10 +16,26 @@
     return 80;
   }
 
+  var relativesSet = [ ];
+
+  function getRelatives(relationships) {
+    relativesList = [ ];
+    relationships.forEach(function (relationship, index) {
+      var from = relationship.from;
+      var to = relationship.to;
+      relativesList[from] = relativesList[from] || [ ];
+      relativesList[from].push(to);
+      relativesList[to] = relativesList[to] || [ ];
+      relativesList[to].push(from);
+    });
+    return [...new Set(relativesList)];
+  }
+
   function drawRelationships(data) {
     var spacing = getSpacing();
     var people = getPeople(data);
     var relationships = getRelationships(data);
+    relativesSet = getRelatives(relationships);
 
     d3.select("svg")
       .selectAll("line")
@@ -30,15 +49,34 @@
   }
 
   function addPeople(people) {
-    d3.select("svg")
+    var selection = d3.select("svg")
       .selectAll("g")
-        .data(people)
-      .enter()
-        .append("g");
+        .data(people);
+
+    selection.enter().append("g");
+    selection.exit().remove();
+  }
+
+  function relatives(person_id) {
+    return relativesSet[person_id];
+  }
+
+  function show_only(people) {
+    drawPeople(people);
   }
 
   function click(person_id) {
-    console.log(person_id);
+    var people = getPeople();
+    var ids = relatives(person_id).concat([person_id]);
+    var visible_people = ids.map(function(item, index) {
+      return people[item];
+    });
+    show_only(visible_people);
+  }
+
+  function getPersonId(person) {
+    var index = getPeople().indexOf(person);
+    return index;
   }
 
   function drawCircles() {
@@ -46,14 +84,25 @@
 
     d3.select("svg")
       .selectAll("g")
+      .selectAll("circle")
+        .remove();
+
+    d3.select("svg")
+      .selectAll("g")
         .append("circle")
         .attr("r", 25)
         .attr("cx", function(d) { return d.x * spacing; })
         .attr("cy", function(d) { return d.y * spacing; })
-        .attr("onclick", function(d, i) { return "click(" + i + ");"; });
+        .attr("onclick", function(d, i) { return "click(" + getPersonId(d) + ");"; });
   }
 
   function drawTooltips() {
+    d3.select("svg")
+      .selectAll("g")
+      .selectAll("circle")
+      .selectAll("title")
+        .remove();
+
     d3.select("svg")
       .selectAll("g")
       .select("circle")
@@ -61,16 +110,16 @@
         .text(function(d) { return d.name; });
   }
 
-  function drawPeople(data) {
-    var people = getPeople(data);
+  function drawPeople(people) {
     addPeople(people);
     drawCircles();
     drawTooltips();
   }
 
-  d3.json("data.json", function(error, data) {
+  d3.json("data.json", function(error, incoming_data) {
+    data = incoming_data;
     drawRelationships(data);
-    drawPeople(data);
+    drawPeople(people);
   });
 </script>
 <style>
@@ -85,6 +134,7 @@
 
   line {
     stroke: rgb(6,120,155);
+    stroke-width: 2;
   }
 
   circle {
