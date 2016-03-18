@@ -37,6 +37,10 @@
         .append("g");
   }
 
+  function click(person_id) {
+    console.log(person_id);
+  }
+
   function drawCircles() {
     var spacing = getSpacing();
 
@@ -45,7 +49,8 @@
         .append("circle")
         .attr("r", 25)
         .attr("cx", function(d) { return d.x * spacing; })
-        .attr("cy", function(d) { return d.y * spacing; });
+        .attr("cy", function(d) { return d.y * spacing; })
+        .attr("onclick", function(d, i) { return "click(" + i + ");"; });
   }
 
   function drawTooltips() {
